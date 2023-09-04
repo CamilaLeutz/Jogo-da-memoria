@@ -20,6 +20,9 @@ const createElement = (tag, className) => {
      return element
 }
 
+const revealCard = ({ target }) => {
+    target.parentNode.classList.add("reveal-card")
+}
 
 const creatCards = (character) => {
     const card = createElement("div", "card")
@@ -30,17 +33,23 @@ const creatCards = (character) => {
 
     card.appendChild(front)
     card.appendChild(back)
-    return card
 
+    card.addEventListener("click", revealCard);
+
+
+    return card
 }
 
 const loadGame = () => {
-    characters.forEach((character) => {
-        
+
+const duplicateCharacters = [ ... characters, ... characters ]
+
+const shuffledArray = duplicateCharacters.sort(() => Math.random() - 0.5)
+
+shuffledArray.forEach((character) => {
         const card = creatCards(character)
         grid.appendChild(card)
-
-
     })
 }
+
 loadGame()
