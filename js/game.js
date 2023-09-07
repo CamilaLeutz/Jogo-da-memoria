@@ -1,4 +1,7 @@
 const grid = document.querySelector(".grid") //mapeando a div que esta com o jogo todo dentro
+const spanPlayer = document.querySelector(".player")
+const timer = document.querySelector(".timer")
+
 
 const characters = [ //arrary dos characters
     "beth",
@@ -26,7 +29,8 @@ const checkEndGame = () => { //  função pra finalizar o jogo
     const disableCards = document.querySelectorAll(".disableCard")
 
     if(disableCards.length === 20 ){ //se as 20 cartas estiverem com o disableCard acionados quer dizer que o  jogo foi ganho
-        alert("Parabéns você venceu o jogo!")
+       clearInterval(this.loop) //para o tempo
+        alert(`Parabéns ${spanPlayer.innerHTML}! Seu jogo chegou ao fim! Seu tempo foi ${timer.innerHTML}!`)
     }
 }
 
@@ -97,4 +101,22 @@ shuffledArray.forEach((character) => {
         grid.appendChild(card)
     })
 }
-loadGame()
+
+const startTimer = () => {
+
+   this.loop = setInterval(() => {
+        const currentTimer = +timer.innerHTML 
+        timer.innerHTML = currentTimer  + 1
+
+    }, 1000)
+
+}
+
+window.onload = () => {
+
+    const playerName = localStorage.getItem("player")
+    spanPlayer.innerHTML = playerName
+    startTimer()
+    loadGame()
+}
+
